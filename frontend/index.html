@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Foodie - Restaurant Admin</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "DM Sans", Arial, sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 8% 15%,
+                    rgba(255, 142, 55, 0.20),
+                    transparent 24%
+                ),
+                radial-gradient(
+                    circle at 92% 85%,
+                    rgba(255, 112, 28, 0.16),
+                    transparent 25%
+                ),
+                #fff8f2;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #292929;
+        }
+
+
+        /* =====================================
+           BACKGROUND
+        ===================================== */
+
+        .shape {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .shape-one {
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(244, 123, 32, 0.13);
+
+            top: -145px;
+            left: 8%;
+        }
+
+        .shape-two {
+            width: 220px;
+            height: 220px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(244, 123, 32, 0.10);
+
+            bottom: -105px;
+            right: 8%;
+        }
+
+        .shape-three,
+        .shape-four {
+            border-radius: 50%;
+            background: #f47b20;
+        }
+
+        .shape-three {
+            width: 11px;
+            height: 11px;
+
+            top: 19%;
+            right: 13%;
+
+            opacity: 0.35;
+
+            animation: dotFloat 4s ease-in-out infinite;
+        }
+
+        .shape-four {
+            width: 7px;
+            height: 7px;
+
+            bottom: 20%;
+            left: 13%;
+
+            opacity: 0.25;
+
+            animation: dotFloat 5s ease-in-out infinite reverse;
+        }
+
+        @keyframes dotFloat {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-14px);
+            }
+        }
+
+
+        /* =====================================
+           MAIN CARD
+        ===================================== */
+
+        .login-wrapper {
+            width: 980px;
+            max-width: 92%;
+            min-height: 570px;
+
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+
+            background: #ffffff;
+
+            border-radius: 28px;
+            overflow: hidden;
+
+            position: relative;
+            z-index: 2;
+
+            box-shadow:
+                0 30px 80px rgba(72, 39, 19, 0.17);
+
+            animation: cardAppear 0.7s ease;
+        }
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(18px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+
+        /* =====================================
+           LEFT HERO
+        ===================================== */
+
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+
+            padding: 48px;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 78% 18%,
+                    rgba(255,255,255,0.18),
+                    transparent 22%
+                ),
+                linear-gradient(
+                    145deg,
+                    #ff8a24 0%,
+                    #f36f13 48%,
+                    #e95708 100%
+                );
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-section::before {
+            content: "";
+
+            position: absolute;
+
+            width: 330px;
+            height: 330px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.16);
+
+            right: -145px;
+            top: -120px;
+        }
+
+        .hero-section::after {
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.13);
+
+            left: -120px;
+            bottom: -120px;
+        }
+
+
+        /* =====================================
+           BADGE
+        ===================================== */
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            width: fit-content;
+
+            padding: 8px 14px;
+
+            border-radius: 30px;
+
+            background: rgba(255,255,255,0.15);
+
+            border: 1px solid rgba(255,255,255,0.20);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 20px;
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(255,255,255,0.10);
+        }
+
+
+        /* =====================================
+           MAIN FOOD
+        ===================================== */
+
+        .food-visual {
+            width: 125px;
+            height: 125px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    #fff8ee,
+                    #ffe0c5 60%,
+                    #ffc18e 100%
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 68px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 15px 35px rgba(130, 49, 5, 0.18);
+
+            position: relative;
+            z-index: 5;
+
+            animation:
+                mainFoodFloat 4s ease-in-out infinite,
+                foodGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes mainFoodFloat {
+
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-9px) rotate(2deg);
+            }
+        }
+
+        @keyframes foodGlow {
+
+            0%, 100% {
+                box-shadow:
+                    0 15px 35px rgba(130, 49, 5, 0.18);
+            }
+
+            50% {
+                box-shadow:
+                    0 20px 45px rgba(130, 49, 5, 0.27);
+            }
+        }
+
+
+        /* =====================================
+           FLOATING FOOD
+        ===================================== */
+
+        .floating-food {
+            position: absolute;
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.14);
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+
+            z-index: 4;
+
+            backdrop-filter: blur(2px);
+        }
+
+        .pizza {
+            top: 80px;
+            right: 55px;
+
+            animation:
+                pizzaFloat 5s ease-in-out infinite,
+                pizzaRotate 7s linear infinite;
+        }
+
+        @keyframes pizzaFloat {
+
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-10px, 13px);
+            }
+        }
+
+        @keyframes pizzaRotate {
+
+            from {
+                rotate: 0deg;
+            }
+
+            to {
+                rotate: 360deg;
+            }
+        }
+
+        .fries {
+            right: 75px;
+            bottom: 80px;
+
+            animation: friesFloat 4.5s ease-in-out infinite;
+        }
+
+        @keyframes friesFloat {
+
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(10px, -13px) rotate(5deg);
+            }
+        }
+
+        .drink {
+            left: 42%;
+            top: 30px;
+
+            width: 42px;
+            height: 42px;
+
+            font-size: 19px;
+
+            animation: drinkFloat 4.2s ease-in-out infinite;
+        }
+
+        @keyframes drinkFloat {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(12px);
+            }
+        }
+
+
+        /* =====================================
+           SPARKLES
+        ===================================== */
+
+        .food-particle {
+            position: absolute;
+
+            font-size: 15px;
+
+            opacity: 0.65;
+
+            z-index: 3;
+        }
+
+        .particle-one {
+            top: 160px;
+            right: 150px;
+
+            animation: particleOne 5s ease-in-out infinite;
+        }
+
+        .particle-two {
+            bottom: 125px;
+            left: 145px;
+
+            animation: particleTwo 6s ease-in-out infinite;
+        }
+
+        .particle-three {
+            top: 210px;
+            left: 45px;
+
+            animation: particleThree 5.5s ease-in-out infinite;
+        }
+
+        @keyframes particleOne {
+
+            0%, 100% {
+                transform: translate(0, 0);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: translate(8px, -15px);
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes particleTwo {
+
+            0%, 100% {
+                transform: translate(0, 0);
+                opacity: 0.35;
+            }
+
+            50% {
+                transform: translate(-10px, 12px);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes particleThree {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-18px);
+            }
+        }
+
+
+        /* =====================================
+           BRANDING
+        ===================================== */
+
+        .brand {
+            font-family: "Poppins", sans-serif;
+
+            font-size: 46px;
+            font-weight: 800;
+
+            line-height: 1;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 10px;
+
+            position: relative;
+            z-index: 5;
+        }
+
+        .brand span {
+            color: #ffe6d1;
+        }
+
+        .hero-title {
+            font-family: "Poppins", sans-serif;
+
+            font-size: 30px;
+            font-weight: 700;
+
+            line-height: 1.22;
+
+            margin-bottom: 15px;
+
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero-description {
+            max-width: 380px;
+
+            color: rgba(255,255,255,0.92);
+
+            font-size: 14px;
+
+            line-height: 1.75;
+
+            position: relative;
+            z-index: 5;
+        }
+
+
+        /* =====================================
+           FEATURES
+        ===================================== */
+
+        .features {
+            display: flex;
+            gap: 18px;
+
+            margin-top: 27px;
+
+            position: relative;
+            z-index: 5;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            color: rgba(255,255,255,0.94);
+        }
+
+        .feature-check {
+            width: 21px;
+            height: 21px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.17);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 10px;
+        }
+
+
+        /* =====================================
+           LOGIN SIDE
+        ===================================== */
+
+        .login-section {
+            padding: 55px 58px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            background: #ffffff;
+        }
+
+        .small-title {
+            color: #f47b20;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.6px;
+
+            margin-bottom: 9px;
+        }
+
+        .login-title {
+            font-family: "Poppins", sans-serif;
+
+            font-size: 32px;
+            font-weight: 700;
+
+            color: #292929;
+
+            line-height: 1.2;
+
+            letter-spacing: -0.8px;
+
+            margin-bottom: 9px;
+        }
+
+        .login-subtitle {
+            font-size: 13px;
+
+            color: #8f8f8f;
+
+            line-height: 1.7;
+
+            margin-bottom: 31px;
+        }
+
+
+        /* =====================================
+           FORM
+        ===================================== */
+
+        #loginForm {
+            width: 100%;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            color: #454545;
+
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #f47b20;
+
+            font-size: 14px;
+
+            pointer-events: none;
+
+            z-index: 2;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            height: 52px;
+
+            border: 1px solid #e3dcd6;
+
+            border-radius: 11px;
+
+            background: #fffdfb;
+
+            padding: 0 46px 0 42px;
+
+            font-family: "DM Sans", sans-serif;
+
+            font-size: 13px;
+
+            color: #333;
+
+            outline: none;
+
+            transition: 0.2s ease;
+        }
+
+        .input-wrapper input:hover {
+            border-color: #d4c5ba;
+        }
+
+        .input-wrapper input:focus {
+            background: #ffffff;
+
+            border-color: #f47b20;
+
+            box-shadow:
+                0 0 0 4px rgba(244,123,32,0.09);
+        }
+
+        .input-wrapper input::placeholder {
+            color: #aaa;
+        }
+
+
+        /* =====================================
+           PASSWORD TOGGLE
+        ===================================== */
+
+        .password-toggle {
+            position: absolute;
+
+            right: 11px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #999;
+
+            font-family: "DM Sans", sans-serif;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            padding: 6px;
+        }
+
+        .password-toggle:hover {
+            color: #f47b20;
+        }
+
+
+        /* =====================================
+           LOGIN BUTTON
+        ===================================== */
+
+        .login-button {
+            width: 100%;
+            height: 53px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff8a24,
+                    #ed620b
+                );
+
+            color: white;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            margin-top: 7px;
+
+            box-shadow:
+                0 9px 20px rgba(244,123,32,0.23);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 13px 27px rgba(244,123,32,0.32);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+
+        /* =====================================
+           ERROR
+        ===================================== */
+
+        #errorMessage {
+            min-height: 18px;
+
+            margin-top: 12px;
+
+            color: #d9534f;
+
+            font-size: 12px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .login-footer {
+            margin-top: 27px;
+
+            text-align: center;
+
+            color: #999;
+
+            font-size: 11px;
+        }
+
+        .login-footer span {
+            color: #f47b20;
+            font-weight: 700;
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 800px) {
+
+            body {
+                overflow: auto;
+                padding: 25px 0;
+            }
+
+            .login-wrapper {
+                grid-template-columns: 1fr;
+
+                max-width: 450px;
+
+                min-height: auto;
+
+                border-radius: 22px;
+            }
+
+            .hero-section {
+                padding: 38px 32px;
+
+                text-align: center;
+
+                align-items: center;
+            }
+
+            .badge {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .features {
+                display: none;
+            }
+
+            .floating-food,
+            .food-particle {
+                display: none;
+            }
+
+            .food-visual {
+                width: 95px;
+                height: 95px;
+
+                font-size: 55px;
+            }
+
+            .brand {
+                font-size: 38px;
+            }
+
+            .hero-title {
+                font-size: 25px;
+            }
+
+            .login-section {
+                padding: 38px 30px;
+            }
+        }
+
+
+        @media (max-width: 420px) {
+
+            .login-wrapper {
+                max-width: 94%;
+            }
+
+            .hero-section {
+                padding: 30px 22px;
+            }
+
+            .login-section {
+                padding: 32px 22px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- Background -->
+
+    <div class="shape shape-one"></div>
+    <div class="shape shape-two"></div>
+    <div class="shape shape-three"></div>
+    <div class="shape shape-four"></div>
+
+
+    <!-- =====================================
+         MAIN LOGIN CARD
+    ====================================== -->
+
+    <div class="login-wrapper">
+
+
+        <!-- =================================
+             LEFT HERO
+        ================================== -->
+
+        <section class="hero-section">
+
+
+            <div class="badge">
+
+                <span class="badge-dot"></span>
+
+                RESTAURANT ADMIN
+
+            </div>
+
+
+            <!-- Main animated burger -->
+
+            <div class="food-visual">
+                🍔
+            </div>
+
+
+            <!-- Floating food -->
+
+            <div class="floating-food pizza">
+                🍕
+            </div>
+
+            <div class="floating-food fries">
+                🍟
+            </div>
+
+            <div class="floating-food drink">
+                🥤
+            </div>
+
+
+            <!-- Animated sparkles -->
+
+            <div class="food-particle particle-one">
+                ✨
+            </div>
+
+            <div class="food-particle particle-two">
+                ✦
+            </div>
+
+            <div class="food-particle particle-three">
+                ✨
+            </div>
+
+
+            <!-- Brand -->
+
+            <div class="brand">
+                Foodie<span>.</span>
+            </div>
+
+
+            <h1 class="hero-title">
+
+                Your restaurant.<br>
+                Your control.
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Manage your menu, keep track of orders
+                and control your restaurant — all from
+                one simple dashboard.
+
+            </p>
+
+
+            <!-- Features -->
+
+            <div class="features">
+
+                <div class="feature">
+
+                    <div class="feature-check">
+                        ✓
+                    </div>
+
+                    Menu Management
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-check">
+                        ✓
+                    </div>
+
+                    Order Tracking
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-check">
+                        ✓
+                    </div>
+
+                    Availability
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             LOGIN
+        ================================== -->
+
+        <section class="login-section">
+
+
+            <div class="small-title">
+                Welcome back
+            </div>
+
+
+            <h2 class="login-title">
+                Admin Login
+            </h2>
+
+
+            <p class="login-subtitle">
+
+                Sign in to access your restaurant dashboard.
+
+            </p>
+
+
+            <!-- Existing login form -->
+
+            <form id="loginForm">
+
+
+                <!-- EMAIL -->
+
+                <div class="input-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="togglePassword">
+
+                            Show
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOGIN -->
+
+                <button
+                    type="submit"
+                    class="login-button">
+
+                    Login to Dashboard
+
+                </button>
+
+
+                <p id="errorMessage"></p>
+
+            </form>
+
+
+            <div class="login-footer">
+
+                Restaurant Admin Portal ·
+                <span>Foodie</span>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================
+         EXISTING LOGIN SCRIPT
+         DO NOT CHANGE
+    ====================================== -->
+
+    <script src="script.js"></script>
+
+
+    <!-- =====================================
+         PASSWORD SHOW / HIDE
+    ====================================== -->
+
+    <script>
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const passwordInput =
+            document.getElementById("password");
+
+
+        if (togglePassword && passwordInput) {
+
+            togglePassword.addEventListener(
+                "click",
+                function () {
+
+                    if (
+                        passwordInput.type === "password"
+                    ) {
+
+                        passwordInput.type = "text";
+
+                        togglePassword.textContent = "Hide";
+
+                    } else {
+
+                        passwordInput.type = "password";
+
+                        togglePassword.textContent = "Show";
+
+                    }
+
+                }
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>

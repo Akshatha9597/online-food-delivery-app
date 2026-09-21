@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Menu Management</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+    <!-- ===============================
+         HEADER
+    ================================ -->
+
+    <header class="dashboard-header">
+
+        <div>
+
+            <p class="page-label">
+                RESTAURANT ADMIN
+            </p>
+
+            <h1>
+                Menu Management
+            </h1>
+
+        </div>
+
+
+        <button id="backBtn">
+            ← Dashboard
+        </button>
+
+    </header>
+
+
+
+    <!-- ===============================
+         STATISTICS
+    ================================ -->
+
+    <section class="dashboard-cards">
+
+        <div class="card">
+
+            <h3>
+                Total Items
+            </h3>
+
+            <p id="totalMenuItems">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Available
+            </h3>
+
+            <p id="availableItems">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Unavailable
+            </h3>
+
+            <p id="unavailableItems">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Categories
+            </h3>
+
+            <p id="totalCategories">
+                0
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ===============================
+         ADD / EDIT MENU
+    ================================ -->
+
+    <section class="orders-section">
+
+        <h2 id="formTitle">
+            Add New Menu Item
+        </h2>
+
+
+        <form id="menuForm">
+
+
+            <!-- Food Name -->
+
+            <div class="form-field">
+
+                <label for="foodName">
+                    Food Name
+                </label>
+
+                <input
+                    type="text"
+                    id="foodName"
+                    placeholder="Example: Veg Burger"
+                    maxlength="80"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- Description -->
+
+            <div class="form-field">
+
+                <label for="foodDescription">
+                    Description
+                </label>
+
+                <textarea
+                    id="foodDescription"
+                    placeholder="Describe the food item..."
+                    maxlength="200"
+                    rows="3"
+                    required
+                ></textarea>
+
+                <small>
+                    Maximum 200 characters
+                </small>
+
+            </div>
+
+
+
+            <!-- Price -->
+
+            <div class="form-field">
+
+                <label for="foodPrice">
+                    Price (₹)
+                </label>
+
+                <input
+                    type="number"
+                    id="foodPrice"
+                    placeholder="Example: 190"
+                    min="1"
+                    max="100000"
+                    step="0.01"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- Category -->
+
+            <div class="form-field">
+
+                <label for="foodCategory">
+                    Category
+                </label>
+
+                <select
+                    id="foodCategory"
+                    required
+                >
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="Pizza">
+                        Pizza
+                    </option>
+
+                    <option value="Burger">
+                        Burger
+                    </option>
+
+                    <option value="Biryani">
+                        Biryani
+                    </option>
+
+                    <option value="South Indian">
+                        South Indian
+                    </option>
+
+                    <option value="North Indian">
+                        North Indian
+                    </option>
+
+                    <option value="Chinese">
+                        Chinese
+                    </option>
+
+                    <option value="Desserts">
+                        Desserts
+                    </option>
+
+                    <option value="Beverages">
+                        Beverages
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- Buttons -->
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    id="submitBtn"
+                >
+                    Add Food Item
+                </button>
+
+
+                <button
+                    type="button"
+                    id="cancelBtn"
+                    class="secondary-btn"
+                    style="display: none;"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+        <p id="menuMessage"></p>
+
+    </section>
+
+
+
+    <!-- ===============================
+         CURRENT MENU
+    ================================ -->
+
+    <section class="orders-section">
+
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>
+                    Current Menu
+                </h2>
+
+                <p class="section-subtitle">
+                    Manage food items and availability
+                </p>
+
+            </div>
+
+
+            <!-- Filters -->
+
+            <div class="filters">
+
+                <input
+                    type="text"
+                    id="searchMenu"
+                    placeholder="Search food..."
+                >
+
+
+                <select id="categoryFilter">
+
+                    <option value="all">
+                        All Categories
+                    </option>
+
+                </select>
+
+
+                <select id="availabilityFilter">
+
+                    <option value="all">
+                        All Items
+                    </option>
+
+                    <option value="available">
+                        Available
+                    </option>
+
+                    <option value="unavailable">
+                        Unavailable
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Food
+                        </th>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Availability
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="menuTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+<script src="menu.js?v=6"></script>
+
+</body>
+
+</html>

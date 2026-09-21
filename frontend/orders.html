@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Foodie | Orders</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8f9fb;
+            color: #20242c;
+        }
+
+        .page {
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        .header {
+            height: 75px;
+
+            background: white;
+
+            border-bottom: 1px solid #eeeeee;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 11px;
+
+            background: #ff5a2f;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand span {
+            color: #ff5a2f;
+        }
+
+        .back-btn {
+            border: none;
+
+            background: #fff1eb;
+            color: #ff5a2f;
+
+            padding: 10px 16px;
+
+            border-radius: 9px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: #ffe5dc;
+        }
+
+
+        /* CONTENT */
+
+        .content {
+            padding: 35px;
+        }
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .page-heading h1 {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .page-heading p {
+            color: #8a9099;
+            font-size: 14px;
+        }
+
+
+        /* SUMMARY */
+
+        .summary {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+
+            border: 1px solid #eeeeee;
+
+            border-radius: 15px;
+
+            padding: 20px;
+        }
+
+        .summary-card h3 {
+            color: #777e88;
+
+            font-size: 13px;
+
+            margin-bottom: 10px;
+        }
+
+        .summary-card p {
+            font-size: 26px;
+
+            font-weight: 800;
+        }
+
+
+        /* ORDERS */
+
+        .orders-card {
+            background: white;
+
+            border: 1px solid #eeeeee;
+
+            border-radius: 16px;
+
+            padding: 25px;
+
+            overflow-x: auto;
+        }
+
+        .orders-card h2 {
+            font-size: 19px;
+
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 750px;
+        }
+
+        th {
+            background: #fafafa;
+
+            color: #8a9099;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            text-align: left;
+
+            padding: 14px 12px;
+
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        td {
+            padding: 16px 12px;
+
+            font-size: 13px;
+
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+
+        /* STATUS */
+
+        .status-select {
+            border: 1px solid #dddddd;
+
+            border-radius: 8px;
+
+            padding: 8px 10px;
+
+            background: white;
+
+            font-size: 12px;
+
+            cursor: pointer;
+        }
+
+        .status-select:focus {
+            outline: none;
+
+            border-color: #ff5a2f;
+        }
+
+
+        /* MESSAGE */
+
+        #ordersMessage {
+            text-align: center;
+
+            color: #888;
+
+            padding: 30px;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 0 18px;
+            }
+
+            .content {
+                padding: 22px 18px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="page">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    🍴
+                </div>
+
+                Food<span>ie</span>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="back-btn"
+                id="backBtn"
+            >
+                ← Dashboard
+            </button>
+
+        </header>
+
+
+
+        <!-- CONTENT -->
+
+        <main class="content">
+
+
+            <div class="page-heading">
+
+                <h1>
+                    Orders Management
+                </h1>
+
+                <p>
+                    View and manage your restaurant orders.
+                </p>
+
+            </div>
+
+
+
+            <!-- SUMMARY -->
+
+            <section class="summary">
+
+                <div class="summary-card">
+
+                    <h3>
+                        Total Orders
+                    </h3>
+
+                    <p id="totalOrders">
+                        0
+                    </p>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <h3>
+                        Pending Orders
+                    </h3>
+
+                    <p id="pendingOrders">
+                        0
+                    </p>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <h3>
+                        Completed Orders
+                    </h3>
+
+                    <p id="completedOrders">
+                        0
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ORDERS TABLE -->
+
+            <section class="orders-card">
+
+                <h2>
+                    All Orders
+                </h2>
+
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Order ID
+                            </th>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Items
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="ordersTable">
+
+                    </tbody>
+
+                </table>
+
+
+                <div id="ordersMessage">
+                    Loading orders...
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+    <script src="orders.js"></script>
+
+</body>
+
+</html>
