@@ -2,10 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2");
 const path = require("path");
+require("dotenv").config();
 
 const app = express();
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 
 // ===============================
@@ -37,13 +38,13 @@ app.use(
 
 const db = mysql.createConnection({
 
-    host: "localhost",
+    host: process.env.DB_HOST,
 
-    user: "root",
+    user: process.env.DB_USER,
 
-    password: "akshatha@2006",
+    password: process.env.DB_PASSWORD,
 
-    database: "food_delivery"
+    database: process.env.DB_NAME
 
 });
 
